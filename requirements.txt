@@ -1,4 +1,0 @@
-flask
-flask-cors
-fer
-opencv-python-headless
