@@ -3,87 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emotion Detection AI</title>
+    <title>EmotionAI - Real-Time Mood Detection</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="header-main">
-                <h1>Emotion Detector AI</h1>
-                <div id="server-status" class="server-status">
-                    <span class="status-dot"></span>
-                    <span id="status-text">Backend: Checking...</span>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>EmotionAI</h1>
+                    <span class="tagline">Real-Time Mood Detection</span>
+                </div>
+                <div class="header-right">
+                    <div id="server-status" class="server-status">
+                        <span class="status-dot"></span>
+                        <span id="status-text">Checking...</span>
+                    </div>
+                    <button id="settings-btn" class="settings-btn" title="Settings">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="3"/>
+                            <circle cx="19" cy="5" r="3"/>
+                            <circle cx="5" cy="5" r="3"/>
+                            <circle cx="19" cy="19" r="3"/>
+                            <circle cx="5" cy="19" r="3"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
-            <p>Real-time mood analysis using AI</p>
         </header>
 
-        <main>
-            <div class="video-section">
-                <div class="video-container">
-                    <div id="live-indicator" class="live-indicator">
-                        <div class="dot"></div>
-                        <span>LIVE</span>
-                    </div>
-                    <video id="video" autoplay muted playsinline></video>
-                    <canvas id="canvas" style="display:none;"></canvas>
-                    <div id="detection-overlay"></div>
-                    <div id="scanner-line" class="scanner-line"></div>
-                </div>
-
-                <div class="quote-card">
-                    <h3>Mood Insight</h3>
-                    <div id="mood-quote">
-                        Start detection to get an insight...
-                    </div>
-                </div>
-            </div>
-
-            <div class="results-section">
-                <div class="mood-card">
-                    <h3>Current Mood</h3>
-                    <div class="mood-container">
-                        <div id="mood-display" class="mood-value">Waiting...</div>
-                        <div id="emoji-display" class="emoji-value">✨</div>
-                    </div>
-                </div>
-
-                <div class="stats-card">
-                    <h3>Confidence Scores</h3>
-                    <div id="scores-container">
-                        <!-- Scores will be injected here -->
-                    </div>
-                </div>
-
-                <div class="history-card">
+        <!-- Main Content -->
+        <main class="main-container">
+            <!-- Left Section - Camera & Current Mood -->
+            <section class="left-section">
+                <!-- Camera Container -->
+                <div class="card camera-card">
                     <div class="card-header">
-                        <h3>Mood History</h3>
-                        <div class="history-controls">
-                            <button id="clear-history" title="Clear History">🗑️</button>
-                            <button id="download-history" title="Download History">💾</button>
+                        <span class="card-icon">📷</span>
+                        <h3>Camera Feed</h3>
+                    </div>
+                    <div class="video-container">
+                        <div id="live-indicator" class="live-indicator">
+                            <div class="pulse-dot"></div>
+                            <span>LIVE</span>
+                        </div>
+                        <video id="video" autoplay muted playsinline></video>
+                        <canvas id="canvas" style="display:none;"></canvas>
+                        <div id="detection-overlay" class="detection-overlay"></div>
+                        <div id="scanner-line" class="scanner-line"></div>
+                        
+                        <!-- Placeholder -->
+                        <div id="camera-placeholder" class="camera-placeholder">
+                            <span class="placeholder-icon">🎥</span>
+                            <p>Start Detection to Begin</p>
+                            <p class="placeholder-subtitle">Click "Start Detection" below</p>
                         </div>
                     </div>
-                    <ul id="mood-history">
-                        <!-- History items will be added here -->
+                </div>
+                
+                <!-- Current Mood Display -->
+                <div class="card mood-display-card">
+                    <div class="card-header">
+                        <span class="card-icon">🎯</span>
+                        <h3>Current Mood</h3>
+                    </div>
+                    <div class="mood-content">
+                        <div id="emoji-display" class="mood-emoji">✨</div>
+                        <div class="mood-info">
+                            <h2 id="mood-display">Waiting...</h2>
+                            <p class="mood-desc">Start detection to analyze your mood</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mood Insight -->
+                <div class="card insight-card">
+                    <div class="card-header">
+                        <span class="card-icon">💭</span>
+                        <h3>Mood Insight</h3>
+                    </div>
+                    <div id="mood-quote" class="quote-content">
+                        <p class="quote-text">Your emotions tell a story. Let's discover yours together.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Section - Analytics & History -->
+            <section class="right-section">
+                <!-- Top Row: Stats + Streak -->
+                <div class="grid-row">
+                    <!-- Daily Stats -->
+                    <div class="card stats-card">
+                        <div class="card-header">
+                            <span class="card-icon">📈</span>
+                            <h3>Today's Stats</h3>
+                        </div>
+                        <div id="daily-summary" class="stats-grid">
+                            <div class="stat-item happy-stat">
+                                <span class="stat-emoji">😊</span>
+                                <span class="stat-label">Happy</span>
+                                <span class="stat-count" id="happy-count">0</span>
+                            </div>
+                            <div class="stat-item sad-stat">
+                                <span class="stat-emoji">😢</span>
+                                <span class="stat-label">Sad</span>
+                                <span class="stat-count" id="sad-count">0</span>
+                            </div>
+                            <div class="stat-item neutral-stat">
+                                <span class="stat-emoji">😐</span>
+                                <span class="stat-label">Neutral</span>
+                                <span class="stat-count" id="neutral-count">0</span>
+                            </div>
+                            <div class="stat-item angry-stat">
+                                <span class="stat-emoji">😠</span>
+                                <span class="stat-label">Angry</span>
+                                <span class="stat-count" id="angry-count">0</span>
+                            </div>
+                            <div class="stat-item surprise-stat">
+                                <span class="stat-emoji">😲</span>
+                                <span class="stat-label">Surprised</span>
+                                <span class="stat-count" id="surprise-count">0</span>
+                            </div>
+                            <div class="stat-item fear-stat">
+                                <span class="stat-emoji">😨</span>
+                                <span class="stat-label">Fear</span>
+                                <span class="stat-count" id="fear-count">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Streak & Badge -->
+                    <div class="card streak-badge-card">
+                        <div class="streak-section">
+                            <div class="card-header">
+                                <span class="card-icon">🔥</span>
+                                <h3>Streak</h3>
+                            </div>
+                            <div id="streak-display" class="streak-content">
+                                <span id="streak-emoji" class="streak-emoji">✨</span>
+                                <div class="streak-info">
+                                    <h3 id="streak-text">Build your streak!</h3>
+                                    <p class="streak-subtitle">Keep the same mood to increase</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="badge-section">
+                            <div class="card-header">
+                                <span class="card-icon">🏆</span>
+                                <h3>Mood of the Day</h3>
+                            </div>
+                            <div id="badge-display" class="badge-content">
+                                <span id="badge-emoji">🏆</span>
+                                <span id="badge-text">Check back later!</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Confidence Scores -->
+                <div class="card confidence-card">
+                    <div class="card-header">
+                        <span class="card-icon">📊</span>
+                        <h3>Confidence Scores</h3>
+                    </div>
+                    <div id="scores-container" class="scores-content">
+                        <div class="scores-placeholder">
+                            <span class="placeholder-emoji">🔍</span>
+                            <p>Start detection to see emotion probabilities</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Suggestions -->
+                <div class="card suggestions-card">
+                    <div class="card-header">
+                        <span class="card-icon">💡</span>
+                        <h3>Personalized Suggestions</h3>
+                    </div>
+                    <div id="suggestions-list" class="suggestions-content">
+                        <div class="suggestion-placeholder">
+                            <span class="placeholder-emoji">💭</span>
+                            <p>Get personalized tips based on your mood</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mood History -->
+                <div class="card history-card">
+                    <div class="card-header">
+                        <span class="card-icon">📜</span>
+                        <h3>Mood History</h3>
+                        <div class="history-controls">
+                            <button id="clear-history" class="history-btn" title="Clear History">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                </svg>
+                            </button>
+                            <button id="download-history" class="history-btn" title="Download History">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <ul id="mood-history" class="history-list">
+                        <li class="history-item">
+                            <span class="no-history">No history yet. Start detecting!</span>
+                        </li>
                     </ul>
                 </div>
-            </div>
+            </section>
         </main>
 
+        <!-- Controls -->
         <div class="controls">
-            <button id="start-btn">Start Detection</button>
-            <button id="capture-btn" disabled>Capture Snapshot</button>
-            <button id="share-btn" disabled>Share Mood</button>
-            <button id="stop-btn" disabled>Stop Detection</button>
+            <button id="start-btn" class="control-btn primary-btn">
+                <span class="btn-icon">▶️</span>
+                Start Detection
+            </button>
+            <button id="capture-btn" class="control-btn secondary-btn" disabled>
+                <span class="btn-icon">📸</span>
+                Capture Snapshot
+            </button>
+            <button id="share-btn" class="control-btn tertiary-btn" disabled>
+                <span class="btn-icon">📤</span>
+                Share Mood
+            </button>
+            <button id="stop-btn" class="control-btn danger-btn" disabled>
+                <span class="btn-icon">⏹️</span>
+                Stop Detection
+            </button>
         </div>
 
-        <footer>
-            <p>Powered by Python Backend & JS Frontend</p>
-            <p><a href="https://emotion-detection-black-alpha.vercel.app/" target="_blank" style="color: var(--primary); text-decoration: none;">emotion-detection-black-alpha.vercel.app</a></p>
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Powered by <span class="highlight">EmotionAI</span> | Detecting emotions in real-time</p>
         </footer>
     </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button id="close-modal" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-item">
+                    <label for="speech-toggle">Speech Feedback</label>
+                    <label class="toggle">
+                        <input type="checkbox" id="speech-toggle" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label for="interval-select">Detection Interval</label>
+                    <select id="interval-select">
+                        <option value="500">Fast (500ms)</option>
+                        <option value="800" selected>Normal (800ms)</option>
+                        <option value="1000">Slow (1000ms)</option>
+                        <option value="2000">Very Slow (2000ms)</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <label>Theme</label>
+                    <select id="theme-select">
+                        <option value="dark">Dark Theme</option>
+                        <option value="purple">Purple Theme</option>
+                        <option value="ocean">Ocean Theme</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

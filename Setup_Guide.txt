@@ -1,0 +1,30 @@
+EMOTION DETECTION AI - SETUP GUIDE
+================================
+
+Aapne dost ko ye project dene ke liye niche diye gaye steps follow karein:
+
+1. PYTHON INSTALLATION:
+   - Sabse pehle apne laptop mein Python (3.9 se 3.11 version best hai) install karein.
+   - Install karte waqt "Add Python to PATH" checkmark ko zaroor select karein.
+
+2. PROJECT FILES:
+   - Ye pura folder (emotion) apne dost ko copy karke de dein.
+
+3. DEPENDENCIES INSTALLATION:
+   - Terminal (CMD) ya VS Code terminal open karein.
+   - Project folder ke andar jayein: cd emotion
+   - Ye command run karein:
+     pip install flask flask-cors deepface opencv-python numpy tf-keras
+
+4. RUN THE PROJECT:
+   - Terminal mein ye command run karein:
+     python backend/app.py
+   - Pehli baar run karne par ye AI models (lagbhag 200-300MB) download karega, isliye internet on rakhein.
+
+5. OPEN IN BROWSER:
+   - Jab terminal mein "Running on http://127.0.0.1:5000" dikhne lage, tab browser mein ye link open karein:
+     http://localhost:5000
+
+NOTE:
+- Agar "Camera Permission Denied" aaye, toh browser mein URL bar ke paas camera icon par click karke "Allow" karein.
+- Pehli prediction aane mein 30-60 seconds lag sakte hain kyunki AI model load hota hai.
