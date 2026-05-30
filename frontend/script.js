@@ -48,6 +48,7 @@ const emotionEmojis = {
     angry: "😠",
     surprise: "😲",
     fear: "😨"
+    
 };
 
 const emotionQuotes = {
