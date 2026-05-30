@@ -40,7 +40,7 @@ const elements = {
 };
 
 // Configuration
-const API_URL = window.location.origin;
+const API_URL = "https://emotion-detection-navy.vercel.app";
 const emotionEmojis = {
     happy: "😊",
     sad: "😢",
